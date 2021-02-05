@@ -155,15 +155,15 @@ namespace Plugin.InAppBilling
 
 
 
-		/// <summary>
-		/// Purchase a specific product or subscription
-		/// </summary>
-		/// <param name="productId">Sku or ID of product</param>
-		/// <param name="itemType">Type of product being requested</param>
-		/// <param name="payload">Developer specific payload</param>
-		/// <param name="verifyPurchase">Interface to verify purchase</param>
-		/// <returns></returns>
-		public async override Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, IInAppBillingVerifyPurchase verifyPurchase = null)
+        /// <summary>
+        /// Purchase a specific product or subscription
+        /// </summary>
+        /// <param name="productId">Sku or ID of product</param>
+        /// <param name="itemType">Type of product being requested</param>
+        /// <param name="billingParameters">Additional billing parameters</param>
+        /// <param name="verifyPurchase">Interface to verify purchase</param>
+        /// <returns></returns>
+        public async override Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, BillingParameters billingParameters = null, IInAppBillingVerifyPurchase verifyPurchase = null)
 		{
 			var p = await PurchaseAsync(productId);
 

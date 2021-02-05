@@ -72,11 +72,11 @@ namespace Plugin.InAppBilling
         /// </summary>
         /// <param name="productId">Sku or ID of product</param>
         /// <param name="itemType">Type of product being requested</param>
-        /// <param name="payload">Developer specific payload</param>
+        /// <param name="billingParameters">Additional billing parameters</param>
         /// <param name="verifyPurchase">Verify purchase implementation</param>
         /// <returns></returns>
         /// <exception cref="InAppBillingPurchaseException">If an error occurs during processing</exception>
-        public async override Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, IInAppBillingVerifyPurchase verifyPurchase = null)
+        public async override Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, BillingParameters billingParameters = null, IInAppBillingVerifyPurchase verifyPurchase = null)
         {
             // Get purchase result from store or simulator
             var purchaseResult = await CurrentAppMock.RequestProductPurchaseAsync(InTestingMode, productId);

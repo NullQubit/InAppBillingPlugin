@@ -46,16 +46,16 @@ namespace Plugin.InAppBilling
 		/// <returns>The current purchases</returns>
 		public abstract Task<IEnumerable<InAppBillingPurchase>> GetPurchasesAsync(ItemType itemType);
 
-		/// <summary>
-		/// Purchase a specific product or subscription
-		/// </summary>
-		/// <param name="productId">Sku or ID of product</param>
-		/// <param name="itemType">Type of product being requested</param>
-		/// <param name="payload">Developer specific payload</param>
-		/// <param name="verifyPurchase">Verify Purchase implementation</param>
-		/// <returns>Purchase details</returns>
-		/// <exception cref="InAppBillingPurchaseException">If an error occures during processing</exception>
-		public abstract Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, IInAppBillingVerifyPurchase verifyPurchase = null);
+        /// <summary>
+        /// Purchase a specific product or subscription
+        /// </summary>
+        /// <param name="productId">Sku or ID of product</param>
+        /// <param name="itemType">Type of product being requested</param>
+        /// <param name="billingParameters">Additional billing parameters</param>
+        /// <param name="verifyPurchase">Verify Purchase implementation</param>
+        /// <returns>Purchase details</returns>
+        /// <exception cref="InAppBillingPurchaseException">If an error occures during processing</exception>
+        public abstract Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, BillingParameters billingParameters = null, IInAppBillingVerifyPurchase verifyPurchase = null);
 
         /// <summary>
         /// Consume a purchase with a purchase token.

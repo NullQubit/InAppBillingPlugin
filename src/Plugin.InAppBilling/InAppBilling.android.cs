@@ -193,10 +193,10 @@ namespace Plugin.InAppBilling
         /// </summary>
         /// <param name="productId">Sku or ID of product</param>
         /// <param name="itemType">Type of product being requested</param>
-        /// <param name="payload">Developer specific payload (can not be null)</param>
+        /// <param name="billingParameters">Additional billing parameters</param>
         /// <param name="verifyPurchase">Interface to verify purchase</param>
         /// <returns></returns>
-        public async override Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, IInAppBillingVerifyPurchase verifyPurchase = null)
+        public async override Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, BillingParameters billingParameters = null, IInAppBillingVerifyPurchase verifyPurchase = null)
         {
             if (BillingClient == null || !IsConnected)
             {
@@ -213,18 +213,18 @@ namespace Plugin.InAppBilling
             switch (itemType)
             {
                 case ItemType.InAppPurchase:
-                    return await PurchaseAsync(productId, BillingClient.SkuType.Inapp, verifyPurchase);
+                    return await PurchaseAsync(productId, BillingClient.SkuType.Inapp, billingParameters, verifyPurchase);
                 case ItemType.Subscription:
 
                     var result = BillingClient.IsFeatureSupported(BillingClient.FeatureType.Subscriptions);
                     ParseBillingResult(result);
-                    return await PurchaseAsync(productId, BillingClient.SkuType.Subs, verifyPurchase);
+                    return await PurchaseAsync(productId, BillingClient.SkuType.Subs, billingParameters, verifyPurchase);
             }
 
             return null;
         }
 
-        async Task<InAppBillingPurchase> PurchaseAsync(string productSku, string itemType, IInAppBillingVerifyPurchase verifyPurchase)
+        async Task<InAppBillingPurchase> PurchaseAsync(string productSku, string itemType, BillingParameters billingParameters, IInAppBillingVerifyPurchase verifyPurchase)
         {            
 
             var skuDetailsParams = SkuDetailsParams.NewBuilder()
@@ -242,6 +242,8 @@ namespace Plugin.InAppBilling
 
             var flowParams = BillingFlowParams.NewBuilder()
                 .SetSkuDetails(skuDetails)
+                .SetObfuscatedAccountId(billingParameters?.ObfuscatedAccountId)
+                .SetObfuscatedProfileId(billingParameters?.ObfuscatedProfileId)
                 .Build();
 
             tcsPurchase = new TaskCompletionSource<(BillingResult billingResult, IList<Android.BillingClient.Api.Purchase> purchases)>();

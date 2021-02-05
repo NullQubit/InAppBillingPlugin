@@ -52,11 +52,11 @@ namespace Plugin.InAppBilling
         /// </summary>
         /// <param name="productId">Sku or ID of product</param>
         /// <param name="itemType">Type of product being requested</param>
-        /// <param name="payload">Developer specific payload (can not be null)</param>
+        /// <param name="billingParams">Additional billing parameters</param>
         /// <param name="verifyPurchase">Verify Purchase implementation</param>
         /// <returns>Purchase details</returns>
         /// <exception cref="InAppBillingPurchaseException">If an error occures during processing</exception>
-        Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, IInAppBillingVerifyPurchase verifyPurchase = null);
+        Task<InAppBillingPurchase> PurchaseAsync(string productId, ItemType itemType, BillingParameters billingParams = null, IInAppBillingVerifyPurchase verifyPurchase = null);
 
         /// <summary>
         /// Consume a purchase with a purchase token.
